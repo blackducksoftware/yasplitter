@@ -76,7 +76,7 @@ do
 		echo $TOTAL
 		TOTAL=0
 		tar cf $TEMPFOLDER/TEMP-${LINENUM}.tar -T $TMPLIST
-		bash ../scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}.tar Hurt ${LINENUM}
+		bash ../scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
 		TOTAL=$SIZE
 		echo $FPATH >$TMPLIST
 	else
@@ -86,6 +86,6 @@ do
 done
 echo $TOTAL
 tar cf $TEMPFOLDER/TEMP-${LINENUM}.tar -T $TMPLIST
-bash ../scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}.tar Hurt $(LINENUM)
+bash ../scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}.tar $PROJECT $VERSION $(LINENUM)
 
 exit 0 #This is the most important line
