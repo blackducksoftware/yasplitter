@@ -25,8 +25,9 @@ fi
 # SET BD_URL and BD_API_TOKEN variables to point to your instance of Black Duck
 #
 
-export SPRING_APPLICATION_JSON='{"blackduck.url":$BD_URL,"blackduck.api.token":$BD_API_TOKEN}'
 bash <(curl -s -L https://detect.synopsys.com/detect8.sh) \
+     --blackduck.url=$BD_URL \
+     --blackduck.api.token=$BD_API_TOKEN \
      --blackduck.trust.cert=true \
      --detect.binary.scan.file.path=${PROJECTPATH} \
      --detect.tools=BINARY_SCAN \
