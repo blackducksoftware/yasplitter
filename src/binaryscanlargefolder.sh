@@ -25,8 +25,11 @@ PROJECT=$2
 VERSION=$3
 NOSCAN=$4
 
-
-TEMPFOLDER=/extra/data/temp
+TEMPFOLDER=~/temp
+mkdir -p $TEMPFOLDER
+# Print info on available space
+TEMPSPACE=$(df -h $TEMPFOLDER | grep -vi size | awk '{print $4}')
+echo Available space in TEMPFOLDER $TEMPSPACE
 FILELIST=$TEMPFOLDER/filelist
 TMPLIST=$TEMPFOLDER/tmplist
 TEMPFILE=$TEMPFOLDER/TEMP.tar
@@ -34,8 +37,36 @@ rm -f $TEMPFILE
 
 SIZELIMIT=4000000000
 
-#check if there are files larger that the limit
+# Environment and other sanity checks 
+# check if we have GNU find
+find --version >/dev/null 2>&1
+if [ "$?" == "0" ]
+then 
+	echo Found GNU find
+else
+	echo Need GNU find
+	exit 1
+fi
 
+# Check if we have BD_URL
+if [ -n "$BD_URL" ]
+then
+	echo Blackduck is at $BD_URL
+else
+	echo need BD_URL
+	exit 1
+fi
+
+# Check if we have API TOKEN
+if [ -n "$BD_API_TOKEN" ]
+then
+	echo Found BD_API_TOKEN
+else
+	echo need BD_API_TOKEN
+	exit 1
+fi
+#
+#check if there are files larger that the limit
 FILESOVERLIMIT=$(find $SOURCEFOLDER -type f -size +${SIZELIMIT})
 
 if [ "$FILESOVERLIMIT" == "" ]
@@ -44,7 +75,7 @@ then
 	echo
 else
 	echo 
-	echo The following files are latger that $SIZELIMIT
+	echo The following files are larger that $SIZELIMIT
 	echo $FILESOVERLIMIT
 	echo 
 	echo Deal with them first.
