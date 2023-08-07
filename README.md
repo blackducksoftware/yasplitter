@@ -2,7 +2,7 @@
 ## Purpose
 
 Why do we need another splitter? Well, how about running binary scans on VMDK image or on a large disk image or a gigantic codebase?
-We are talking tens of gigabytes and your scan limit is set to default 5 GB. No wories, this can help.
+We are talking tens of gigabytes and your scan limit is set to default 5 GB. No worries, this can help.
 
 Some work would have to be done upfront. 
 
