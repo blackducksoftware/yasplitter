@@ -13,6 +13,22 @@ Some work would have to be done upfront.
 
 Once that done, set the environment variables and scan.
 
-## Environment Variables
+## Quickstart Guide:
 
-## Notes
+### Environment Variables
+Set or export the following environment variables:
+
+BD_URL -> https://<your_blackduck_url>
+
+BD_API_TOKEN -> API token of the BD user
+
+### Steps:
+
+* Set the above referenced environment variables
+* Place the data set into the source folder (Note: If its an archive, please unpack it first)
+* Run the script as follows
+
+```
+bash binaryscanlargefolder.sh <PATH_TO_SOURCE_FOLDER> <PROJECT_NAME> <VERSION_NAME>
+
+```
