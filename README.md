@@ -25,7 +25,10 @@ BD_API_TOKEN -> API token of the BD user
 ### Steps:
 
 * Set the above referenced environment variables
-* Place the data set into the source folder (Note: If its an archive, please unpack it first)
+* Place the data set into the source folder
+  * Note the following:
+      * If its an archive, please unpack it first
+      * If its a mountable image file like vmdk, vhd, img or iso etc., please mount the image first and set the <PATH_TO_SOURCE_FOLDER> to the mount point
 * Run the script as follows
 
 ```
