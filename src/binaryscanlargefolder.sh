@@ -107,9 +107,8 @@ do
 	DATA=($LINE)
 	SIZE=${DATA[0]}
 	FPATH=${LINE/$SIZE /}
-	if [ $SIZE -ge $SIZELIMIT ]
+	if [ $SIZE -gt $SIZELIMIT ]
 	then
-		EXCLUDED="${EXCLUDED}$FPATH \n"
 		continue
 	fi
 	PRETALLY=$(( $TOTAL + $SIZE ))
@@ -130,8 +129,17 @@ echo $TOTAL
 tar cf $TEMPFOLDER/TEMP-${LINENUM}.tar -T $TMPLIST
 bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
 
+if [ "$FILESOVERLIMIT" == "" ]
+then
+        echo No files larger that $SIZELIMIT detected. 
+	echo
+else
+        echo 
+        echo The following files are larger that $SIZELIMIT
+        echo $FILESOVERLIMIT
+        echo 
+        echo They were excluded from processing.
+fi
 echo
-echo The following files were excluded from processing due to excessive size:
-echo $EXCLUDED
-echo
+
 exit 0 #This is the most important line
