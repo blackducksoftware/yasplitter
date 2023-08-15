@@ -7,8 +7,8 @@ We are talking tens of gigabytes and your scan limit is set to default 5 GB. No 
 Some work would have to be done upfront. 
 
 * Data that we scan would have to be presented as a filesystem.
-* There should be no individual files larger that the scan size limit in that filestructure.
-* If those are present, unravel them and discard archive file. If those are not archives - discard them.
+* Individual files larger that the scan size limit will be excluded from the scan.
+* If large files are archives, unravel them and discard archive file.
 * A temporary location with enought storage to accept the datatset should be procured.
 
 Once that done, set the environment variables and scan.
@@ -32,6 +32,13 @@ BD_API_TOKEN -> API token of the BD user
 * Run the script as follows
 
 ```
-bash binaryscanlargefolder.sh <PATH_TO_SOURCE_FOLDER> <PROJECT_NAME> <VERSION_NAME>
+bash scanlargefolder.sh <PATH_TO_SOURCE_FOLDER> <PROJECT_NAME> <VERSION_NAME>
 
 ```
+To run signature scan instead of binary scan run it as following:
+```
+bash scanlargefolder.sh <PATH_TO_SOURCE_FOLDER> <PROJECT_NAME> <VERSION_NAME> signature
+
+```
+
+
