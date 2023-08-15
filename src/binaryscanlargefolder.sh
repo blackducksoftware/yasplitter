@@ -86,7 +86,7 @@ fi
 # Generate filelist
 find $SOURCEFOLDER -type f -printf "%s %p \n" >$FILELIST
 
-if [ -z $FILELIST ]
+if [ ! -s $FILELIST ]
 then
 	echo "No files found in the tatget folder"
 	exit 1
