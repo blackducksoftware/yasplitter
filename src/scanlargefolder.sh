@@ -62,6 +62,15 @@ then
 	exit
 fi
 
+# Validate target folder
+
+if [ ! -d "$SOURCEFOLDER" ]
+then
+	echo Folder $SOURCEFOLDER Does not exist
+	echo
+	exit 1
+fi
+
 # Setup tempspace
 TEMPFOLDER=~/temp
 mkdir -p $TEMPFOLDER
