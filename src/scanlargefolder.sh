@@ -55,27 +55,26 @@ PROJECT=$2
 VERSION=$3
 SCANMODE=$4
 
+# Validate command line parameters
 if [ $# -lt 3 ]
 then
 	usage
 	exit
 fi
 
-exit
-
-
-
+# Setup tempspace
 TEMPFOLDER=~/temp
 mkdir -p $TEMPFOLDER
-# Print info on available space
-TEMPSPACE=$(df -h $TEMPFOLDER | grep -vi size | awk '{print $4}')
-echo Available space in TEMPFOLDER $TEMPSPACE
 FILELIST=$TEMPFOLDER/filelist
 TMPLIST=$TEMPFOLDER/tmplist
 rm -rf $TEMPFOLDER/TEMP*
 rm -f $FILELIST
 rm -f $TMPLIST
+# Print info on available space
+TEMPSPACE=$(df -h $TEMPFOLDER | grep -vi size | awk '{print $4}')
+echo Available space in TEMPFOLDER $TEMPSPACE
 
+# Max chunk size limit
 SIZELIMIT=4000000000
 
 # Environment and other sanity checks 
