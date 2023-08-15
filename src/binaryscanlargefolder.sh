@@ -66,6 +66,7 @@ else
 	echo need BD_API_TOKEN
 	exit 1
 fi
+
 #
 #check if there are files larger that the limit
 FILESOVERLIMIT=$(find $SOURCEFOLDER -type f -size +${SIZELIMIT}c)
@@ -118,7 +119,12 @@ do
 		TOTAL=0
 		mkdir -p $TEMPFOLDER/TEMP-${LINENUM}
 		tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
-		bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+		if [ -n $SCANMODE ]
+		then
+			bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
+		else
+			bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+		fi
 		TOTAL=$SIZE
 		echo $FPATH >$TMPLIST
 	else
@@ -128,7 +134,12 @@ do
 done
 echo $TOTAL
 tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
-bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+if [ -n $SCANMODE ]
+then    
+        bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
+else    
+        bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+fi      
 
 if [ "$FILESOVERLIMIT" == "" ]
 then
