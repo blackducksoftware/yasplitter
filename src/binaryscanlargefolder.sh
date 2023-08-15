@@ -133,6 +133,7 @@ do
 	fi
 done
 echo $TOTAL
+mkdir -p $TEMPFOLDER/TEMP-${LINENUM}
 tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
 if [ "$SCANMODE" == "" ]
 then    
