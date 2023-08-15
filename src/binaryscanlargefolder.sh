@@ -130,4 +130,8 @@ echo $TOTAL
 tar cf $TEMPFOLDER/TEMP-${LINENUM}.tar -T $TMPLIST
 bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
 
+echo
+echo The following files were excluded from processing due to excessive size:
+echo $EXCLUDED
+echo
 exit 0 #This is the most important line
