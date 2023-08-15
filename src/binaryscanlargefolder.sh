@@ -14,7 +14,7 @@ function file_size_or_zero()
 { 
 	if [ -f "$1" ]
 	then
-		stat -c%s $TEMPFILE
+		stat -c%s $1
 	else
 		echo 0
 	fi
@@ -32,8 +32,9 @@ TEMPSPACE=$(df -h $TEMPFOLDER | grep -vi size | awk '{print $4}')
 echo Available space in TEMPFOLDER $TEMPSPACE
 FILELIST=$TEMPFOLDER/filelist
 TMPLIST=$TEMPFOLDER/tmplist
-TEMPFILE=$TEMPFOLDER/TEMP.tar
-rm -f $TEMPFILE
+rm -f $TEMPFOLDER/TEMP*
+rm -f $FILELIST
+rm -f $TMPLIST
 
 SIZELIMIT=4000000000
 
@@ -84,6 +85,12 @@ fi
 
 # Generate filelist
 find $SOURCEFOLDER -type f -printf "%s %p \n" >$FILELIST
+
+if [ -z $FILELIST ]
+then
+	echo "No files found in the tatget folder
+	exit 1
+fi
 
 #Basic stats
 TOTALSIZE=$(calculate_size $FILELIST)
