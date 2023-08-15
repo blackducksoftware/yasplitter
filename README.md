@@ -9,7 +9,7 @@ Some work would have to be done upfront.
 * Data that we scan would have to be presented as a filesystem.
 * Individual files larger that the scan size limit will be excluded from the scan.
 * If large files are archives, unravel them and discard archive file.
-* A temporary location with enought storage to accept the datatset should be procured.
+* A temporary location with enought storage to accept the dataset should be procured.
 
 Once that done, set the environment variables and scan.
 
