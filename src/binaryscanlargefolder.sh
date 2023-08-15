@@ -68,7 +68,7 @@ else
 fi
 
 #
-#check if there are files larger that the limit
+#check if there are files larger than the limit
 FILESOVERLIMIT=$(find $SOURCEFOLDER -type f -size +${SIZELIMIT}c)
 
 if [ "$FILESOVERLIMIT" == "" ]
@@ -77,7 +77,7 @@ then
 	echo
 else
 	echo 
-	echo The following files are larger that $SIZELIMIT
+	echo The following files are larger than $SIZELIMIT
 	echo $FILESOVERLIMIT
 	echo 
 	echo They will be excluded from processing.
@@ -119,11 +119,11 @@ do
 		TOTAL=0
 		mkdir -p $TEMPFOLDER/TEMP-${LINENUM}
 		tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
-		if [ -n $SCANMODE ]
+		if [ "$SCANMODE" == "" ]
 		then
-			bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
-		else
 			bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+		else
+			bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
 		fi
 		TOTAL=$SIZE
 		echo $FPATH >$TMPLIST
@@ -134,11 +134,11 @@ do
 done
 echo $TOTAL
 tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
-if [ -n $SCANMODE ]
+if [ "$SCANMODE" == "" ]
 then    
-        bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
+	bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
 else    
-        bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+	bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
 fi      
 
 if [ "$FILESOVERLIMIT" == "" ]
@@ -147,7 +147,7 @@ then
 	echo
 else
         echo 
-        echo The following files are larger that $SIZELIMIT
+        echo The following files are larger than $SIZELIMIT
         echo $FILESOVERLIMIT
         echo 
         echo They were excluded from processing.
