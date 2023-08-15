@@ -23,7 +23,7 @@ function file_size_or_zero()
 SOURCEFOLDER=$1
 PROJECT=$2
 VERSION=$3
-NOSCAN=$4
+SCANMODE=$4
 
 TEMPFOLDER=~/temp
 mkdir -p $TEMPFOLDER
@@ -32,7 +32,7 @@ TEMPSPACE=$(df -h $TEMPFOLDER | grep -vi size | awk '{print $4}')
 echo Available space in TEMPFOLDER $TEMPSPACE
 FILELIST=$TEMPFOLDER/filelist
 TMPLIST=$TEMPFOLDER/tmplist
-rm -f $TEMPFOLDER/TEMP*
+rm -rf $TEMPFOLDER/TEMP*
 rm -f $FILELIST
 rm -f $TMPLIST
 
@@ -116,8 +116,9 @@ do
 	then
 		echo $TOTAL
 		TOTAL=0
-		tar cf $TEMPFOLDER/TEMP-${LINENUM}.tar -T $TMPLIST
-		bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+		mkdir -p $TEMPFOLDER/TEMP-${LINENUM}
+		tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
+		bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
 		TOTAL=$SIZE
 		echo $FPATH >$TMPLIST
 	else
@@ -126,8 +127,8 @@ do
 	fi
 done
 echo $TOTAL
-tar cf $TEMPFOLDER/TEMP-${LINENUM}.tar -T $TMPLIST
-bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
+bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
 
 if [ "$FILESOVERLIMIT" == "" ]
 then
