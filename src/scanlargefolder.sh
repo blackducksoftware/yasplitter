@@ -1,5 +1,28 @@
 #!/bin/bash
+# Copyright (c) 2023 - Synopsys, Inc.
+# Author: MK
+# 
+# Purpose - File based splitter for BINARY and SIGNATURE scans
+# This script will scan a large filesystem in chunks no larger than $SIZELIMIT. 
+# Directory structure can be arbitrary
 #
+# ** Data that we scan would have to be presented as a filesystem (folder).
+# ** Individual files larger that the scan size limit will be excluded from the scan.
+# ** If large files are archives, unravel them and discard archive file.
+# ** A temporary location with enough storage to accept the entire dataset needed.
+#
+#
+#  usage:
+#  bash scanlargefolder.sh <PATH_TO_SOURCE_FOLDER> <PROJECT_NAME> <VERSION_NAME> [sig]
+#  PATH_TO_SOURCE_FOLDER - Location to be scanned
+#  PROJECT_NAME          - Project Name
+#  VERSION_NAME          - Version Name
+#  sig, optional         - If present use signature scan instaed of binary scan
+#
+
+function usage() {
+	
+}
 
 
 function calculate_size()
