@@ -21,7 +21,14 @@
 #
 
 function usage() {
-	
+  echo
+  echo "usage:"
+  echo "bash scanlargefolder.sh PATH_TO_SOURCE_FOLDER PROJECT_NAME VERSION_NAME [sig]"
+  echo "  PATH_TO_SOURCE_FOLDER - Location to be scanned"
+  echo "  PROJECT_NAME          - Project Name"
+  echo "  VERSION_NAME          - Version Name"
+  echo "  sig, optional         - If present use signature scan instaed of binary scan"
+  echo
 }
 
 
@@ -47,6 +54,16 @@ SOURCEFOLDER=$1
 PROJECT=$2
 VERSION=$3
 SCANMODE=$4
+
+if [ $# -lt 3 ]
+then
+	usage
+	exit
+fi
+
+exit
+
+
 
 TEMPFOLDER=~/temp
 mkdir -p $TEMPFOLDER
