@@ -68,7 +68,7 @@ else
 fi
 #
 #check if there are files larger that the limit
-FILESOVERLIMIT=$(find $SOURCEFOLDER -type f -size +${SIZELIMIT})
+FILESOVERLIMIT=$(find $SOURCEFOLDER -type f -size +${SIZELIMIT}c)
 
 if [ "$FILESOVERLIMIT" == "" ]
 then
