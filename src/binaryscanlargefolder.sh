@@ -79,8 +79,7 @@ else
 	echo The following files are larger that $SIZELIMIT
 	echo $FILESOVERLIMIT
 	echo 
-	echo Deal with them first.
-	exit 1
+	echo They will be excluded from processing.
 fi
 
 # Generate filelist
@@ -88,7 +87,7 @@ find $SOURCEFOLDER -type f -printf "%s %p \n" >$FILELIST
 
 if [ ! -s $FILELIST ]
 then
-	echo "No files found in the tatget folder"
+	echo "No files found in the target folder."
 	exit 1
 fi
 
@@ -108,6 +107,11 @@ do
 	DATA=($LINE)
 	SIZE=${DATA[0]}
 	FPATH=${LINE/$SIZE /}
+	if [ $SIZE -ge $SIZELIMIT ]
+	then
+		EXCLUDED="${EXCLUDED}$FPATH \n"
+		continue
+	fi
 	PRETALLY=$(( $TOTAL + $SIZE ))
 	if [ $PRETALLY -gt $SIZELIMIT ]
 	then
