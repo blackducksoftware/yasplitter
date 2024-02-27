@@ -25,7 +25,7 @@ fi
 # SET BD_URL and BD_API_TOKEN variables to point to your instance of Black Duck
 #
 
-bash <(curl -s -L https://detect.synopsys.com/detect8.sh) \
+bash <(curl -s -L https://detect.synopsys.com/detect9.sh) \
      --blackduck.url=$BD_URL \
      --blackduck.api.token=$BD_API_TOKEN \
      --blackduck.trust.cert=true \
