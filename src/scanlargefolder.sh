@@ -115,6 +115,16 @@ else
 	exit 1
 fi
 
+DETECT_VERSION=0
+if [ -n "$DETECT_MAJOR_VERSION" ]
+then
+	echo Detect Major Version is $DETECT_MAJOR_VERSION
+	DETECT_VERSION = $DETECT_MAJOR_VERSION
+ else
+ 	echo Detect Version 9 will be used
+  	DETECT_VERSION = 9
+fi
+
 #
 #check if there are files larger than the limit
 FILESOVERLIMIT=$(find $SOURCEFOLDER -type f -size +${SIZELIMIT}c)
@@ -185,9 +195,9 @@ mkdir -p $TEMPFOLDER/TEMP-${LINENUM}
 tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
 if [ "$SCANMODE" == "" ]
 then    
-	bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+	bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM} $DETECT_VERSION
 else    
-	bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
+	bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM} $DETECT_VERSION
 fi      
 
 if [ "$FILESOVERLIMIT" == "" ]
