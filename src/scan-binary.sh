@@ -6,6 +6,8 @@ PROJECT=$2
 VERSION=$3
 SUFFIX=$4
 
+DETECT_URL_PATH=https://detect.blackduck.com/detect${DETECT_MAJOR_VERSION:-9}.sh
+
 if [ "$PROJECTPATH" = "" ]
 then
    echo "specify folder to scan"
@@ -25,7 +27,7 @@ fi
 # SET BD_URL and BD_API_TOKEN variables to point to your instance of Black Duck
 #
 
-bash <(curl -s -L https://detect.synopsys.com/detect9.sh) \
+bash <(curl -s -L $DETECT_URL_PATH) \
      --blackduck.url=$BD_URL \
      --blackduck.api.token=$BD_API_TOKEN \
      --blackduck.trust.cert=true \
