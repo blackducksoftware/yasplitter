@@ -181,10 +181,10 @@ do
 		if [ "$SCANMODE" == "" ]
 		then
 		  echo Executing binary scan on $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar
-			bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
+			bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM} $DETECT_VERSION
 		else
 		  echo Executing signature scan on $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar
-			bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
+			bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM} $DETECT_VERSION
 		fi
 		TOTAL=$SIZE
 		echo $FPATH >$TMPLIST
