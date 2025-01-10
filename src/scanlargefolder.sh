@@ -84,6 +84,7 @@ TEMPSPACE=$(df -h $TEMPFOLDER | grep -vi size | awk '{print $4}')
 echo Available space in TEMPFOLDER $TEMPSPACE
 
 # Max chunk size limit
+#If still running into the signature scan limit, update this to a smaller number
 SIZELIMIT=4000000000
 
 # Environment and other sanity checks 
