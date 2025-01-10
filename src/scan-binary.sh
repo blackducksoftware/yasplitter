@@ -6,7 +6,7 @@ PROJECT=$2
 VERSION=$3
 SUFFIX=$4
 
-DETECT_URL_PATH=https://detect.blackduck.com/detect${DETECT_MAJOR_VERSION:-9}.sh
+DETECT_URL_PATH=https://detect.blackduck.com/detect${DETECT_MAJOR_VERSION:-10}.sh
 
 if [ "$PROJECTPATH" = "" ]
 then
