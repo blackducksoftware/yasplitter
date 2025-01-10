@@ -179,8 +179,10 @@ do
 		tar cf $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar -T $TMPLIST
 		if [ "$SCANMODE" == "" ]
 		then
+		  echo Executing binary scan on $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar
 			bash scan-binary.sh $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar $PROJECT $VERSION ${LINENUM}
 		else
+		  echo Executing signature scan on $TEMPFOLDER/TEMP-${LINENUM}/TEMP-${LINENUM}.tar
 			bash scan-signature.sh $TEMPFOLDER/TEMP-${LINENUM} $PROJECT $VERSION ${LINENUM}
 		fi
 		TOTAL=$SIZE
@@ -212,5 +214,7 @@ else
         echo They were excluded from processing.
 fi
 echo
+
+rm -r $TEMPFOLDER
 
 exit 0 #This is the most important line
