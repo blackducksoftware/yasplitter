@@ -26,11 +26,19 @@ fi
 
 # SET BD_URL and BD_API_TOKEN variables to point to your instance of Black Duck
 #
+get_bearer_token() {
+    local bd_url="$1"
+    local api_token="$2"
+    local response
+    response=$(curl -s -X POST -H "Authorization: token $api_token" "$bd_url/api/tokens/authenticate")
+    echo "$response" | grep -oP '"bearerToken"\s*:\s*"\K[^"]+'
+}
 
 get_scan_readiness() {
     local api_url="${BD_URL}/api/codelocations?q=name:${PROJECT}_${VERSION}_${SUFFIX}_code binary"
     local response
-    response=$(curl -s -H "Authorization: Bearer $BD_API_TOKEN" "$api_url")
+    local bearer_token=$(get_bearer_token "$BD_URL" "$BD_API_TOKEN")
+    response=$(curl -s -H "Authorization: Bearer $bearer_token" "$api_url")
 
     # Extract count of IN_PROGRESS status items
     local count
