@@ -27,6 +27,23 @@ fi
 # SET BD_URL and BD_API_TOKEN variables to point to your instance of Black Duck
 #
 
+get_scan_readiness() {
+    local api_url="${BD_URL}/api/codelocations?q=name:${PROJECT}_${VERSION}_${SUFFIX}_code binary"
+    local response
+    response=$(curl -s -H "Authorization: Bearer $BD_API_TOKEN" "$api_url")
+
+    # Extract count of IN_PROGRESS status items
+    local count
+    count=$(echo "$response" | grep -o '"status":[^]]*' | grep -c 'IN_PROGRESS')
+
+    # Return 0 if no scans are in progress (ready), 1 otherwise (not ready)
+    if [ "$count" -eq 0 ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 bash <(curl -s -L $DETECT_URL_PATH) \
      --blackduck.url=$BD_URL \
      --blackduck.api.token=$BD_API_TOKEN \
@@ -36,3 +53,13 @@ bash <(curl -s -L $DETECT_URL_PATH) \
      --detect.project.name=${PROJECT} \
      --detect.project.version.name=${VERSION} \
      --detect.code.location.name=${PROJECT}_${VERSION}_${SUFFIX}_code \
+
+if [ "$DETECT_SERIAL_MODE" = "true" ] || [ "$DETECT_SERIAL_MODE" = "TRUE" ]; then
+  # Wait for scan readiness
+  echo "Waiting for scan readiness..."
+  while ! get_scan_readiness; do
+      echo "Scan is still in progress. Waiting 30 seconds before rechecking..."
+      sleep 30
+  done
+  echo "Scan completed."
+fi
