@@ -33,7 +33,7 @@ get_bearer_token() {
 }
 
 get_scan_readiness() {
-    local api_url="${BD_URL}/api/codelocations?q=name:${PROJECT}_${VERSION}_${SUFFIX}_code binary"
+    local api_url="${BD_URL}/api/codelocations?q=name:${PROJECT}_${VERSION}_${SUFFIX}_code%20binary"
     local response
     local bearer_token=$(get_bearer_token)
     response=$(curl -s -H "Authorization: Bearer $bearer_token" "$api_url")
