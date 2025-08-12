@@ -115,6 +115,13 @@ else
 	exit 1
 fi
 
+
+# Check if we have BD_URL
+if [ -n "$DETECT_SERIAL_MODE" ]
+then
+	echo Serial mode is enabled
+fi
+
 #
 #check if there are files larger than the limit
 FILESOVERLIMIT=$(find $SOURCEFOLDER -type f -size +${SIZELIMIT}c)
