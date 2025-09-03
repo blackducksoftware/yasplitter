@@ -7,7 +7,7 @@ FROM alpine:3.19
 ENV BD_URL=""
 ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk"
 # Default DETECT_SERIAL_MODE to 1 (true-ish). Users can override at runtime.
-ENV DETECT_SERIAL_MODE=1
+ENV DETECT_SERIAL_MODE="true"
 
 WORKDIR /app
 
