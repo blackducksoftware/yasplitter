@@ -29,19 +29,19 @@ fi
 get_bearer_token() {
     local response
     response=$(curl -s -X POST -H "Authorization: token $BD_API_TOKEN" "$BD_URL/api/tokens/authenticate")
-    #echo "$response" | grep -oP '"bearerToken"\s*:\s*"\K[^"]+'
-    if command -v jq >/dev/null 2>&1; then
-        echo "$response" | jq -r '.bearerToken // empty'
-    else
-        echo "$response" | sed -n 's/.*"bearerToken"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p'
-    fi
+    echo "$response" | grep -oP '"bearerToken"\s*:\s*"\K[^"]+'
 }
 
 get_scan_readiness() {
     local api_url="${BD_URL}/api/codelocations?q=name:${PROJECT}_${VERSION}_${SUFFIX}_code%20binary"
+
+    echo "Checking scans in progress with api: $api_url"
+
     local response
     local bearer_token=$(get_bearer_token)
     response=$(curl -s -H "Authorization: Bearer $bearer_token" "$api_url")
+
+    echo "  - API Response: $response"
 
     # Extract count of IN_PROGRESS status items
     local count

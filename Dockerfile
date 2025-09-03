@@ -12,7 +12,7 @@ ENV DETECT_SERIAL_MODE="true"
 WORKDIR /app
 
 # install runtime deps
-RUN apk add --no-cache jq bash curl ca-certificates findutils openjdk11-jre && update-ca-certificates && \
+RUN apk add --no-cache grep pcre bash curl ca-certificates findutils openjdk11-jre && update-ca-certificates && \
 	apk upgrade
 
 # Copy only the scanner script(s) we need. Keep permissions.
@@ -27,5 +27,4 @@ ENTRYPOINT ["/bin/bash", "/app/docker-entrypoint.sh"]
 WORKDIR /app
 
 # By using ENTRYPOINT, `docker run <image> <args...>` will pass <args...>
-# to the script. The script expects the source folder path to look like
-# /tmp/<PATH_TO_SOURCE_FOLDER> when mounted into the container at runtime.
+# to the script. 
