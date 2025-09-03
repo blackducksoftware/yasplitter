@@ -12,7 +12,7 @@ ENV DETECT_SERIAL_MODE="true"
 WORKDIR /app
 
 # install runtime deps
-RUN apk add --no-cache bash curl ca-certificates findutils openjdk11-jre && update-ca-certificates && \
+RUN apk add --no-cache jq bash curl ca-certificates findutils openjdk11-jre && update-ca-certificates && \
 	apk upgrade
 
 # Copy only the scanner script(s) we need. Keep permissions.

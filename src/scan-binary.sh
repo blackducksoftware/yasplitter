@@ -29,7 +29,12 @@ fi
 get_bearer_token() {
     local response
     response=$(curl -s -X POST -H "Authorization: token $BD_API_TOKEN" "$BD_URL/api/tokens/authenticate")
-    echo "$response" | grep -oP '"bearerToken"\s*:\s*"\K[^"]+'
+    #echo "$response" | grep -oP '"bearerToken"\s*:\s*"\K[^"]+'
+    if command -v jq >/dev/null 2>&1; then
+        echo "$response" | jq -r '.bearerToken // empty'
+    else
+        echo "$response" | sed -n 's/.*"bearerToken"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p'
+    fi
 }
 
 get_scan_readiness() {
