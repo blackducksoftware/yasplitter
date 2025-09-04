@@ -34,36 +34,36 @@ get_bearer_token() {
 
 get_scan_readiness() {
     local api_url="${BD_URL}/api/codelocations?q=name:${PROJECT}_${VERSION}_${SUFFIX}_code%20binary"
-
-    echo "Checking scans in progress with api: $api_url"
-
+    echo "API URL: $api_url"
     local response
     local bearer_token=$(get_bearer_token)
     response=$(curl -s -H "Authorization: Bearer $bearer_token" "$api_url")
-
-    echo "  - API Response: $response"
+    echo "Response: $response"
 
     # Extract count of IN_PROGRESS status items
     local count
     count=$(echo "$response" | grep -o '"status":[^]]*' | grep -c 'IN_PROGRESS')
+    echo "Count of IN_PROGRESS scans: $count"
 
     # Return 0 if no scans are in progress (ready), 1 otherwise (not ready)
     if [ "$count" -eq 0 ]; then
+        echo "No scans in progress. Scan is ready."
         return 0
     else
+        echo "Scans are still in progress."
         return 1
     fi
 }
 
-bash <(curl -s -L $DETECT_URL_PATH) \
-     --blackduck.url=$BD_URL \
-     --blackduck.api.token=$BD_API_TOKEN \
-     --blackduck.trust.cert=true \
-     --detect.binary.scan.file.path=${PROJECTPATH} \
-     --detect.tools=BINARY_SCAN \
-     --detect.project.name=${PROJECT} \
-     --detect.project.version.name=${VERSION} \
-     --detect.code.location.name=${PROJECT}_${VERSION}_${SUFFIX}_code \
+# bash <(curl -s -L $DETECT_URL_PATH) \
+#      --blackduck.url=$BD_URL \
+#      --blackduck.api.token=$BD_API_TOKEN \
+#      --blackduck.trust.cert=true \
+#      --detect.binary.scan.file.path=${PROJECTPATH} \
+#      --detect.tools=BINARY_SCAN \
+#      --detect.project.name=${PROJECT} \
+#      --detect.project.version.name=${VERSION} \
+#      --detect.code.location.name=${PROJECT}_${VERSION}_${SUFFIX}_code \
 
 if [ "$DETECT_SERIAL_MODE" = "true" ] || [ "$DETECT_SERIAL_MODE" = "TRUE" ]; then
   # Wait for scan readiness

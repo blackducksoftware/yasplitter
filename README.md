@@ -41,4 +41,31 @@ bash scanlargefolder.sh <PATH_TO_SOURCE_FOLDER> <PROJECT_NAME> <VERSION_NAME> si
 
 ```
 
+## Docker Guide:
 
+Build the container:
+
+    docker build -t yasplitter-scanner:latest .
+
+Create a secret for your API token.
+
+    echo -n "your_token_here" | docker secret create bd_api_token -
+
+Create a service that uses a mounted secret, mounting the large folder you wish to scan into the container.
+
+    docker service create --name scanner \
+      --secret source=bd_api_token,target=BD_API_TOKEN \
+      -e BD_URL='https://your-blackduck.example' \
+      -v /tmp/large_folder_to_scan:/large_folder_to_scan \
+      yasplitter-scanner:latest /large_folder_to_scan PROJECT VERSION SUFFIX
+
+Run a container with the secret:
+
+    printf '%s' 'your_token_here' > /tmp/bd_token
+
+    # run container and mount the file as /run/secrets/BD_API_TOKEN
+    docker run --rm \
+      -v /tmp/large_folder_to_scan:/large_folder_to_scan \
+      -v /tmp/bd_token:/run/secrets/BD_API_TOKEN:ro \
+      -e BD_URL='https://your-blackduck.example' \
+      yasplitter-scanner:latest /tmp/myproject PROJECT VERSION SUFFIX

@@ -117,9 +117,8 @@ fi
 
 
 # Check if we have BD_URL
-if [ -n "$DETECT_SERIAL_MODE" ]
-then
-	echo Serial mode is enabled
+if [ "${DETECT_SERIAL_MODE:-}" = "1" ] || [ "${DETECT_SERIAL_MODE,,}" = "true" ]; then
+    echo "Serial mode is enabled"
 fi
 
 #
