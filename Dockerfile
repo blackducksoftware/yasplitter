@@ -1,4 +1,4 @@
-FROM alpine:3.19
+FROM alpine:latest
 
 # Small scanner image that runs the repo's scanlargefolder.sh script.
 # It installs bash, curl and CA certs so the script can call external services.
